@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style>
+			*{padding:0;margin: 0;}
+			#box{width:800px;height:450px;border: 1px solid black;margin:0 auto;margin-top:100px;}
+			#left{width:500px;height:320px;border: 1px solid black;float: left;margin-left:30px;margin-top:30px;position: relative;
+			line-height:320px;text-align: center;font:32px/320px "";}
+			#right{width:200px;height:320px;border: 1px solid black;float: right;margin-right: 30px;margin-top:30px;}
+			#left ul {width:450px;height:150px;position: relative;}
+			#left ul li{width:50px;height:30px;background:black;position: absolute;list-style: none;}
+			#btn{margin-top:30px;margin-left:300px;}
+			#guard{width:160px;height:20px;background:blue;border-radius: 10px;position: absolute;left:150px;bottom:0px}
+			#ball{width:20px;height:20px;background: red;border-radius: 50%;position: absolute;left:180px;bottom:20px}
+		</style>
+	</head>
+	<body>
+		<div id="box">
+			<div id="left">
+				<ul id="ul">
+					<li></li>
+					<li></li>
+					<li></li>
+					<li></li>
+					<li></li>
+					<li></li>
+					<li></li>
+					<li></li>
+					<li></li>
+					<li></li>
+					<li></li>
+					<li></li>
+					<li></li>
+					<li></li>
+					<li></li>
+					<li></li>
+					<li></li>
+					<li></li>
+					<li></li>
+					<li></li>
+					<li></li>
+					<li></li>
+					<li></li>
+					<li></li>
+					<li></li>
+					<li></li>
+					<li></li>
+					<li></li>
+					<li></li>
+					<li></li>
+					<li></li>
+					<li></li>
+					<li></li>
+					<li></li>
+					<li></li>
+					<li></li>
+					<li></li>
+					<li></li>
+					<li></li>
+					<li></li>
+					<li></li>
+					<li></li>
+					<li></li>
+					<li></li>
+					<li></li>
+					<li></li>
+					<li></li>
+					<li></li>
+					<li></li>
+					<li></li>
+				</ul>				
+				<div id="guard">					
+				</div>
+				<div id="ball">					
+				</div>
+			</div>
+			<div id="right">
+				
+			</div>
+			<input type="button" value="游戏开始" id="btn">
+		</div>
+		<script>
+			function ballbreak(){
+				this.oleft=document.getElementById("left");
+				this.list=document.getElementsByTagName("li");
+				this.ball=document.getElementById("ball");
+				this.board=document.getElementById("guard");
+				this.fx=1;
+				this.fy=-1;
+			}
+			
+			ballbreak.prototype.setcolor=function(min,max){
+				return Math.floor(Math.random()*(max-min+1)+min);
+			}
+		
+			//摆放好砖块位置
+			ballbreak.prototype.init=function(){
+				for(var i=0;i<this.list.length;i++){					
+					this.list[i].style.backgroundColor=`rgb(${this.setcolor(0,255)},${this.setcolor(0,255)},${this.setcolor(0,255)})`;
+					this.list[i].style.left=parseInt(i%10)*this.list[0].offsetWidth+"px";
+					this.list[i].style.top=parseInt(i/10)*this.list[0].offsetHeight+"px";
+				}
+			}
+			
+			//让挡板运动
+			
+			ballbreak.prototype.move=function(){
+				var that = this;
+				document.onkeydown=function(e){
+					var e=e||event;
+					var code=e.keyCode;
+					if(code==37){
+						if(that.board.offsetLeft-20<=0){
+						that.board.style.left=0;
+						}else{
+							that.board.style.left=that.board.offsetLeft-20+"px";
+					    }
+											
+					}
+					if(code==39){
+						if(that.board.offsetLeft+20>=that.oleft.offsetWidth-that.board.offsetWidth){
+						that.board.style.left=that.oleft.offsetWidth-that.board.offsetWidth+"px";
+						}else{
+							that.board.style.left=that.board.offsetLeft+20+"px";	
+						}
+										
+					}
+					
+					//控制挡板的边界
+//					if(that.board.offsetLeft-20<=0){
+//						that.board.style.left=0;
+//					}
+//					if(that.board.offsetLeft+20>=that.oleft.offsetWidth-that.board.offsetWidth){
+//						that.board.style.left=that.oleft.offsetWidth-that.board.offsetWidth+"px";
+//					}
+				}
+			}
+			
+			//小球运动
+			ballbreak.prototype.go=function(){
+				var timer=setInterval(function(){
+					this.ball.style.left=this.ball.offsetLeft+this.fx+"px";
+					this.ball.style.top=this.ball.offsetTop+this.fy+"px";
+					//控制小球上边界
+					if(this.ball.offsetTop<=0){
+						this.ball.style.top=0;
+						this.fy*=-1;
+					}
+					//控制小球左边界
+					if(this.ball.offsetLeft<=0){
+						this.ball.style.left=0;
+						this.fx*=-1;
+					}
+					//控制小球右边界
+					if(this.ball.offsetLeft>=this.oleft.offsetWidth-this.ball.offsetWidth){
+						this.ball.style.left=this.oleft.offsetWidth-this.ball.offsetWidth;
+						this.fx*=-1;
+					}
+					//控制小球下边界
+					
+					if(this.ball.offsetTop>=this.oleft.offsetHeight-this.ball.offsetHeight){
+						clearInterval(timer);
+						this.oleft.appendChild(document.createTextNode("GAME OVER"));
+					}
+					
+					//当小球碰到挡板时反弹
+					if(this.board.offsetTop<=this.ball.offsetTop+this.ball.offsetHeight){
+					    if(this.ball.offsetLeft>=this.board.offsetLeft-this.ball.offsetWidth){
+							if(this.ball.offsetLeft<=this.board.offsetLeft+this.board.offsetWidth){							
+		                            this.fy*=-1;	
+	                            }
+						}
+					}
+
+//                  if(this.board.offsetTop<=this.ball.offsetTop+this.ball.offsetHeight){
+//						if(this.ball.offsetLeft>=this.board.offsetLeft-this.ball.offsetWidth){
+//							if(this.ball.offsetLeft<=this.board.offsetLeft+this.board.offsetWidth){
+//								this.fy*=-1;								
+//							}
+//						}
+//					}
+
+
+                  //当小球碰到砖块时砖块消失 小球反弹
+                    for(var i=0;i<this.list.length;i++){
+                    	if(this.ball.offsetLeft>=this.list[i].offsetLeft){
+                  		    if(this.ball.offsetLeft<=this.list[i].offsetLeft+this.list[0].offsetWidth){
+                  		    	if(this.ball.offsetTop>=this.list[i].offsetTop){
+                  		    		if(this.ball.offsetTop<=this.list[i].offsetTop+this.list[i].offsetHeight){
+                  		    			
+                  		    			this.list[i].style.display="none";
+                  		    			this.fy=2;
+                  		    		}
+                  		    	}
+                  		    }
+                  	    }
+                    }
+                  	
+                  
+                  
+					
+					
+					
+					
+				}.bind(this),8)
+	
+			}
+			
+			
+			
+			var a=new ballbreak();
+			a.init();
+			a.move();
+			
+			document.getElementById("btn").onclick=function(){
+				a.go();
+			}
+		</script>
+		
+		
+		
+	</body>
+</html>

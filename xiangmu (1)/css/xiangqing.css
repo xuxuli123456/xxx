@@ -1,0 +1,31 @@
+*{margin: 0;padding:0;}
+#xiang-content{display: flex;flex-direction: column;}
+#xiangyin{height: 40px; font:10px/40px ""; display: block;width: 100%;}
+#xiang-content .xiangfw{display: flex;}
+#xiang-content .xicleft{width: 400px;height: 560px;}
+#xiang-content .xicleft .xicleft-cent{width:350px;height: 390px;margin: 0 25px;}
+#xiang-content .xicleft .xicleft-cent .cent-img-1{width: 320px;height: 320px;margin: 35px 15px;}
+#xiang-content .xicleft .xicleft-cent .xiul {width:350px;height: 60px;margin: 0 25px;}
+#xiang-content .xicleft .xicleft-cent .xiul ul{width:350px;height: 60px;}
+#xiang-content .xicleft .xicleft-cent .xiul ul li{width:58px;height: 58px;float: left;border: 2px solid #FF4956;}
+#xiang-content .xicleft .xicleft-cent .xiul ul li .xul{width:58px;height: 58px;}
+#xiang-content .xicleft .xicleft-cent a{display: block;font:10px/24px "";margin-top:30px;}
+#xiang-content .xicleft .xicleft-cent a:hover{color:#FF4956}
+
+#xiang-content .xiccenter{width: 490px;margin:30px 10px;}
+#xiang-content .xiccenter h3{font:20px/26px "";}
+#xiang-content .xiccenter .xip{font:10px/16px "";color:#808080;}
+#xiang-content .xiccenter .xh4{font:10px/12px "";height: 55px;padding-top:20px;
+border-bottom: 1px dashed #e6e6e6;margin-bottom: 20px;}
+#xiang-content .xiccenter .xh4 span:first-child{font-size: 16px;color:#FF4956;}
+#xiang-content .xiccenter .xh4 span:nth-child(2){font-size: 36px;color:#FF4956}
+#xiang-content .xiccenter .xh4 span:nth-child(3){font:10px/16px "";color:#fff;background: #99FF00;padding:0 5px;
+border-radius: 2px;margin: 0 5px;;}
+#xiang-content .xiccenter .xh4 span:nth-child(4){font:10px/16px "";color:#fff;background: #4b8ff5;padding:0 5px;
+border-radius: 2px;margin: 0 5px;;}
+#xiang-content .xiccenter .xh4 span:nth-child(5){color:#858585;}
+#xiang-content .xiccenter .xh4 span:nth-child(6){color:#858585;}
+#xiang-content .xiccenter .xcen p{font:13px/36px "";color:#838383;margin-left:30px;}
+#xiang-content .xiccenter .xcen p span{margin-right: 20px;}
+#xiang-content .xiccenter .xcen p:nth-child(2) img{width:24px;height: 16px;}
+#xiang-content .xiccenter .xcen p:nth-child(3) img{width:25px;height: 25px;}

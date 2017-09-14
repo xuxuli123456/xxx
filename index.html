@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title></title>
+		<style>
+			*{padding:0;margin:0;}
+			*li{list-style: none;}
+			header{width:1200px;min-height:400px;border: 1px solid black;}
+			#tul{width:1200px;min-height:300px;}
+			#tul li{width:250px;margin:4px;list-style: none;float: left;}
+			#tul li img{width:250px;height:200px;display:block;}
+			#tul li p{font:12px/30px "";text-align: center;}
+			#tul li button{text-align: center;}
+			
+			#box{width:200px;height:100px;border: 1px solid black;margin-left:500px;}
+			#box ul{display: inline-block;}
+			#box ul li{list-style: none;float: left;display:block;padding:0 4px;}
+			#box ul .active{background: red;}
+		</style>
+	</head>
+	<body>
+		<section id="header">
+			<ul id="tul">
+				<!--<li>
+					<img src="img/1.jpg"/>
+					<p>hsakk</p>
+					<p>￥890元</p>
+					<button>购买</button>
+				</li>		-->
+				
+			</ul>
+			<div id="box">
+				<span id="bleft">上一页</span>
+				<ul id="bul">
+					<li>1</li>
+					<li>2<li>
+					<li>3<li>
+				</ul>
+				<span id="bright">下一页</span>
+			</div>
+			
+			
+		</section>
+	</body>
+</html>
+<script src="ajax.js"></script>
+<script type="text/javascript">
+	function $(id){
+		return document.getElementById(id);
+	}
+	
+	showDate()
+	var index = 1;//页码
+	var  pagenum = 4;
+		function showDate(){
+			ajaxGet("data.json",fn);
+			
+			function fn(msg){
+			var arr = JSON.parse(msg);
+			var str = "";		
+				
+			//最后一页出现bug原因是17有数据，18,19,20都没有数据
+			for(var i = (index-1)*pagenum;i < index*pagenum;i++){
+				if(i<arr.length){//解决最后一页数量不够的问题
+					str += `<li>
+						<img src="img/${arr[i].src}">
+						<p>${arr[i].name}</p>
+						<p>￥${arr[i].price}元</p>
+						<button>购买</button>
+					</li>`				
+				}			
+			}
+			$("tul").innerHTML = str;
+			
+			//获取总页数
+			pagtotal = Math.ceil(arr.length/pagenum);
+			
+			var page = "";
+			for(var j=0;j<pagtotal;j++){
+				page+=`<li>${eval(j+1)}</li>`
+			}
+		    $("bul").innerHTML=page;
+		    
+		    $("bul").children[index-1].className="active";
+		}
+	}
+	
+	
+	
+	
+	 $("bul").onclick=function(e){
+	 	var e = e||event;
+	 	var target=e.target||e.srcElement;
+	 	index = target.innerHTML;
+	 	showDate();
+	 }
+	
+	
+	$("bleft").onclick=function(){
+		index--;
+		if(index<=1){
+			index=1;
+		}
+		showDate();
+	}
+	
+	$("bright").onclick=function(){
+		index++;
+		if(index>=pagtotal){
+			index=pagtotal;
+			alert("已经是最后一页了")
+		}
+		showDate();
+	}
+	
+	
+</script>
